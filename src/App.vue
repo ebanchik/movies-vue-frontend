@@ -14,7 +14,7 @@
     },
     methods: {
       indexMovies: function () {
-        axios.get("/movies.json").then((response) => {
+        axios.get("http://localhost:5000/movies.json").then((response) => {
           console.log("movies index", response);
           this.movies = response.data;
         });
@@ -62,8 +62,8 @@
   <div class="home">
     <h1>New Movie</h1>
     <div>
-      Name:
-      <input type="text" v-model="newMovieParams.name" />
+      Title:
+      <input type="text" v-model="newMovieParams.title" />
       Width:
       <input type="text" v-model="newMovieParams.width" />
       Height:
@@ -85,7 +85,7 @@
     <dialog id="movie-details">
        <form method="dialog">
          <h1>Movie info</h1>
-         <p>Name: <input type="text" v-model="editMovieParams.name" /></p>
+         <p>Title: <input type="text" v-model="editMovieParams.title" /></p>
          <p>Director: <input type="text" v-model="editMovieParams.director" /></p>
          <p>Genre: <input type="text" v-model="editMovieParams.genre" /></p>
          <p>Runtime: <input type="text" v-model="editMovieParams.runtime" /></p>
