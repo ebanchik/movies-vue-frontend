@@ -38,7 +38,7 @@
       },
       updateMovie: function (movie) {
         axios
-          .patch("/movies/" + movie.id + ".json", this.editMovieParams)
+          .patch("/movies/"  movie.id + ".json", this.editMovieParams)
           .then((response) => {
             console.log("movies update", response);
             this.currentMovie = {};
@@ -47,6 +47,13 @@
             console.log("movies update error", error.response);
           });
       },
+      destroyMovie: function (movie) {
+       axios.delete("/movies/" + movie.id + ".json").then((response) => {
+         console.log("movies destroy", response);
+         var index = this.movies.indexOf(movie);
+         this.movies.splice(index, 1);
+       });
+     },
     },
   };
 </script>
@@ -84,6 +91,7 @@
          <p>Runtime: <input type="text" v-model="editMovieParams.runtime" /></p>
          <p>Rating: <input type="text" v-model="editMovieParams.rating" /></p>
          <button v-on:click="updateMovie(currentMovie)">Update</button>
+         <button v-on:click="destroyMovie(currentMovie)">Destroy Movie</button>
          <button>Close</button>
        </form>
      </dialog>
