@@ -5,6 +5,8 @@
       return {
         movies: [],
         newMovieParams: {},
+        editMovieParams: {},
+        currentMovie: {},
       };
     },
     created: function () {
@@ -17,35 +19,51 @@
           this.movies = response.data;
         });
       },
-      createPhoto: function () {
+      createMovie: function () {
        axios
-         .post("/photos.json", this.newPhotoParams)
+         .post("/movies.json", this.newMovieParams)
          .then((response) => {
-           console.log("photos create", response);
-           this.photos.push(response.data);
-           this.newPhotoParams = {};
+           console.log("movies create", response);
+           this.movies.push(response.data);
+           this.newMovieParams = {};
          })
          .catch((error) => {
-           console.log("photos create error", error.response);
+           console.log("movies create error", error.response);
          });
      },
+     showMovie: function (movie) {
+        this.currentMovie = movie;
+        this.editMovieParams = movie;
+        document.querySelector("#movie-details").showModal();
+      },
+      updateMovie: function (movie) {
+        axios
+          .patch("/movies/" + movie.id + ".json", this.editMovieParams)
+          .then((response) => {
+            console.log("movies update", response);
+            this.currentMovie = {};
+          })
+          .catch((error) => {
+            console.log("movies update error", error.response);
+          });
+      },
     },
   };
 </script>
 
 <template>
   <div class="home">
-    <h1>New Photo</h1>
+    <h1>New Movie</h1>
     <div>
       Name:
-      <input type="text" v-model="newPhotoParams.name" />
+      <input type="text" v-model="newMovieParams.name" />
       Width:
-      <input type="text" v-model="newPhotoParams.width" />
+      <input type="text" v-model="newMovieParams.width" />
       Height:
-      <input type="text" v-model="newPhotoParams.height" />
+      <input type="text" v-model="newMovieParams.height" />
       Url:
-      <input type="text" v-model="newPhotoParams.url" />
-      <button v-on:click="createPhoto()">Create Photo</button>
+      <input type="text" v-model="newMovieParams.url" />
+      <button v-on:click="createMovie()">Create Movie</button>
     </div>
     <h1>All Movies</h1>
     <div v-for="movie in movies" v-bind:key="movie.id">
@@ -55,7 +73,20 @@
       <p>Genre: {{ movie.genre }}</p>
       <p>Runtime: {{ movie.runtime }}</p>
       <p>Rating: {{ movie.rating }}</p>
+      <button v-on:click="showMovie(movie)">More info</button>
     </div>
+    <dialog id="movie-details">
+       <form method="dialog">
+         <h1>Movie info</h1>
+         <p>Name: <input type="text" v-model="editMovieParams.name" /></p>
+         <p>Director: <input type="text" v-model="editMovieParams.director" /></p>
+         <p>Genre: <input type="text" v-model="editMovieParams.genre" /></p>
+         <p>Runtime: <input type="text" v-model="editMovieParams.runtime" /></p>
+         <p>Rating: <input type="text" v-model="editMovieParams.rating" /></p>
+         <button v-on:click="updateMovie(currentMovie)">Update</button>
+         <button>Close</button>
+       </form>
+     </dialog>
   </div>
 </template>
 
