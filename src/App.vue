@@ -38,7 +38,7 @@
       },
       updateMovie: function (movie) {
         axios
-          .patch("/movies/"  movie.id + ".json", this.editMovieParams)
+          .patch("/movies/" + movie.id + ".json", this.editMovieParams)
           .then((response) => {
             console.log("movies update", response);
             this.currentMovie = {};
