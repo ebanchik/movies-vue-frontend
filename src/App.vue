@@ -21,7 +21,7 @@
       },
       createMovie: function () {
        axios
-         .post("/movies.json", this.newMovieParams)
+         .post("http://localhost:5000/movies.json", this.newMovieParams)
          .then((response) => {
            console.log("movies create", response);
            this.movies.push(response.data);
@@ -38,7 +38,7 @@
       },
       updateMovie: function (movie) {
         axios
-          .patch("/movies/" + movie.id + ".json", this.editMovieParams)
+          .patch("http://localhost:5000/movies/" + movie.id + ".json", this.editMovieParams)
           .then((response) => {
             console.log("movies update", response);
             this.currentMovie = {};
@@ -48,7 +48,7 @@
           });
       },
       destroyMovie: function (movie) {
-       axios.delete("/movies/" + movie.id + ".json").then((response) => {
+       axios.delete("http://localhost:5000/movies/" + movie.id + ".json").then((response) => {
          console.log("movies destroy", response);
          var index = this.movies.indexOf(movie);
          this.movies.splice(index, 1);
