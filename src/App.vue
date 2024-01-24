@@ -33,7 +33,7 @@
 <template>
   <div id="app">
     <!-- Optional: Navigation Links -->
-    <nav>
+    <nav class="nav-links">
       <router-link to="/">Home |  </router-link>
       <router-link to="/new-movie"> New Movie</router-link>
     </nav>
@@ -45,23 +45,9 @@
 
 <style>
 
-
-body, h1, h2 { 
-  font-family: 'Montserrat', sans-serif; 
+.nav-links {
+  font-size: 20px; /* Increase font size */
+  padding: 10px; /* Add padding around the links */
 }
-
-
-h1 {
-  text-align: center;
-  border: auto;
-  border: 8px dotted #bb1717;
-  border-radius: 5px;
-  width: 500px;
-  margin: auto;
-  font-size: 50px;
-}
-
-
-
 
 </style>

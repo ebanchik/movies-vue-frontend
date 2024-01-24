@@ -1,14 +1,11 @@
 <template>
-  <h2>All Movies</h2>
-  <div v-for="movie in movies" v-bind:key="movie.id">
-      <h2>{{ movie.title }}</h2>
-      <img v-bind:src="movie.url" />
-      <p>Director: {{ movie.director }}</p>
-      <p>Genre: {{ movie.genre }}</p>
-      <p>Runtime: {{ movie.runtime }}</p>
-      <p>Rating: {{ movie.rating }}</p>
-      <button v-on:click="showMovie(movie)">More info</button>
+ <h2 class="title">All Movies</h2>
+ <div class="movies-container">
+    <div class="movie" v-for="movie in movies" v-bind:key="movie.id">
+      <img v-bind:src="movie.image" class="movie-image" />
+      <button class="more-info" v-on:click="showMovie(movie)">More info</button>
     </div>
+  </div>
     <dialog id="movie-details">
        <form method="dialog">
          <h1>Movie info</h1>
@@ -50,3 +47,59 @@ export default {
   }
 };
 </script>
+
+<style>
+
+.movies-container {
+  padding-top: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 40px; /* Adjust left margin */
+  margin-right: 40px;
+}
+.title {
+  text-align: center;
+  border: auto;
+  border: 8px dotted #bb1717;
+  border-radius: 5px;
+  width: 500px;
+  margin: auto;
+  font-size: 50px;
+}
+
+.titles {
+  display: inline-block;
+  padding: 10px;
+  border: auto;
+  border-radius: 10px;
+  border: 3px solid;
+}
+
+.movie_list {
+  padding: 10px;
+}
+
+.movie {
+  text-align: center;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  width: calc(25% - 20px); /* Adjust width and margin */
+  margin: 10px; /* Adjust as needed */
+}
+
+.more_info {
+  display: block;
+  margin: auto;
+  align-content: center;
+}
+
+.movie-image {
+  width: 100%; /* Image takes full width of the container */
+  height: auto; /* Height adjusts automatically to maintain aspect ratio */
+  border-radius: 10px; /* Optional: to match container's border radius */
+  padding-bottom: 10px;
+}
+
+</style>

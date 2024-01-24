@@ -1,6 +1,8 @@
+// import Vue from 'vue';
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import "./style.css";
+// import BootstrapVue from 'bootstrap-vue';
 import App from "./App.vue";
 import axios from "axios";
 import NewMovie from './components/NewMovie.vue';
@@ -25,3 +27,6 @@ const router = createRouter({
 const app = createApp(App);
 app.use(router);
 app.mount("#app");
+
+
+// Vue.use(BootstrapVue);
