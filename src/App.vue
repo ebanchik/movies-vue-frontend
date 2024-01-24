@@ -9,33 +9,6 @@
         currentMovie: {},
       };
     },
-    created: function () {
-      this.indexMovies();
-    },
-    methods: {
-      indexMovies: function () {
-        axios.get("http://localhost:5000/movies.json").then((response) => {
-          console.log("movies index", response);
-          this.movies = response.data;
-        });
-      },
-      createMovie: function () {
-       axios
-         .post("http://localhost:5000/movies.json", this.newMovieParams)
-         .then((response) => {
-           console.log("movies create", response);
-           this.movies.push(response.data);
-           this.newMovieParams = {};
-         })
-         .catch((error) => {
-           console.log("movies create error", error.response);
-         });
-     },
-     showMovie: function (movie) {
-        this.currentMovie = movie;
-        this.editMovieParams = movie;
-        document.querySelector("#movie-details").showModal();
-      },
       updateMovie: function (movie) {
         axios
           .patch("http://localhost:5000/movies/" + movie.id + ".json", this.editMovieParams)
@@ -54,48 +27,41 @@
          this.movies.splice(index, 1);
        });
      },
-    },
   };
 </script>
 
 <template>
-  <div class="home">
-    <h1>New Movie</h1>
-    <div>
-      Title:
-      <input type="text" v-model="newMovieParams.title" />
-      Width:
-      <input type="text" v-model="newMovieParams.width" />
-      Height:
-      <input type="text" v-model="newMovieParams.height" />
-      Url:
-      <input type="text" v-model="newMovieParams.url" />
-      <button v-on:click="createMovie()">Create Movie</button>
-    </div>
-    <h1>All Movies</h1>
-    <div v-for="movie in movies" v-bind:key="movie.id">
-      <h2>{{ movie.title }}</h2>
-      <img v-bind:src="movie.url" v-bind:alt="movie.title" />
-      <p>Director: {{ movie.director }}</p>
-      <p>Genre: {{ movie.genre }}</p>
-      <p>Runtime: {{ movie.runtime }}</p>
-      <p>Rating: {{ movie.rating }}</p>
-      <button v-on:click="showMovie(movie)">More info</button>
-    </div>
-    <dialog id="movie-details">
-       <form method="dialog">
-         <h1>Movie info</h1>
-         <p>Title: <input type="text" v-model="editMovieParams.title" /></p>
-         <p>Director: <input type="text" v-model="editMovieParams.director" /></p>
-         <p>Genre: <input type="text" v-model="editMovieParams.genre" /></p>
-         <p>Runtime: <input type="text" v-model="editMovieParams.runtime" /></p>
-         <p>Rating: <input type="text" v-model="editMovieParams.rating" /></p>
-         <button v-on:click="updateMovie(currentMovie)">Update</button>
-         <button v-on:click="destroyMovie(currentMovie)">Destroy Movie</button>
-         <button>Close</button>
-       </form>
-     </dialog>
+  <div id="app">
+    <!-- Optional: Navigation Links -->
+    <nav>
+      <router-link to="/">Home |  </router-link>
+      <router-link to="/new-movie"> New Movie</router-link>
+    </nav>
+
+    <!-- Router View -->
+    <router-view></router-view>
   </div>
 </template>
 
-<style></style>
+<style>
+
+
+body, h1, h2 { 
+  font-family: 'Montserrat', sans-serif; 
+}
+
+
+h1 {
+  text-align: center;
+  border: auto;
+  border: 8px dotted #bb1717;
+  border-radius: 5px;
+  width: 500px;
+  margin: auto;
+  font-size: 50px;
+}
+
+
+
+
+</style>
